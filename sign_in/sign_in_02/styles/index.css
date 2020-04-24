@@ -1,0 +1,137 @@
+body {
+    margin: 0 auto;
+    font-size: 16px;
+}
+
+input,
+button {
+    outline: none;
+}
+
+a {
+    color: purple;
+    text-decoration: none;
+}
+
+.login-container {
+    width: 50rem;
+    border: 0.1rem solid #e0e0e0;
+    margin: 10rem auto;
+}
+
+.content-header {
+    display: flex;
+}
+
+.content-header a {
+    width: 50%;
+    height: 60px;
+    background-color: #f5f5f5;
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 4rem;
+    color: #333;
+}
+
+.content-header a.current {
+    background-color: transparent;
+    color: purple;
+}
+
+.content-body {
+    padding: 4rem;
+}
+
+.content-body .dom {
+    width: 100%;
+}
+
+.content-body .register-dom {
+    display: none;
+}
+
+.content-body .dom .s1 {
+    margin-bottom: 1.6rem;
+}
+
+.content-body .dom .s1 input {
+    width: 96%;
+    height: 3rem;
+    padding: 0 2%;
+    border-radius: 8px;
+    border: 1px solid #cccccc;
+}
+
+.content-body .dom .s2 {
+    margin-bottom: 1rem;
+}
+
+.content-body .dom .btn {
+    width: 100%;
+    height: 4rem;
+    border: none;
+    font-size: 2rem;
+    color: #fff;
+    background-color: purple;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+#content .content-body .login-another {
+    position: relative;
+    left: 74.6%;
+}
+
+#content .content-body .login-another span {
+    color: #666666;
+    margin: 0 6px;
+}
+
+#content .content-body .login-three {
+    margin-top: 2rem;
+    color: #666666;
+    text-align: center;
+}
+
+#content .content-body .login-three span {
+    position: relative;
+}
+
+#content .content-body .login-three span::before,
+#content .content-body .login-three span::after {
+    content: "";
+    display: inline-block;
+    width: 10rem;
+    height: 0.1rem;
+    border-bottom: 1px solid #e0e0e0;
+    position: absolute;
+    top: 50%;
+}
+
+#content .content-body .login-three span::before {
+    right: 100%;
+}
+
+#content .content-body .login-three span::after {
+    left: 100%;
+}
+
+#content .content-body .login-three .login-icon {
+    margin-top: 1.6rem;
+}
+
+#content .content-body .login-three .login-icon img {
+    width: 4rem;
+}
+
+#content .content-body .dom .msg-code input {
+    width: 60%;
+}
+
+#content .content-body .dom .msg-code input:last-child {
+    color: #666666;
+    cursor: pointer;
+    width: 15%;
+}
