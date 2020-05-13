@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>在线打字</title>
+  <link href="index.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="container">
+    <form id="info_form" action="#" method="post" enctype="application/x-www-form-urlencoded">
+
+      <div id="info">
+        <input type="hidden" name="n8cead3da827842f0" id="type" value="en" />
+        <input type="hidden" name="necd1c9194c45edc9" id="time" value="5" />
+        <input type="hidden" id="word_num" value="200" />
+
+        <div id="typing_info">
+          <div id="typing_info_li">
+            <ul>
+              <li class="daojishi">倒计时</li>
+              <li ><span class="daojishi_time">05:00</span></li>
+              <li >设定时间：<span class="sheding">5</span>分钟</li>
+              <li >速　度：<span class="sudu">-</span> WPM</li>
+              <li >正确率：<span class="zhengquelv">-</span> %</li>
+              <li >错　误：<span class="cuowu">-</span> 字</li>
+              <li >总字数：<span class="zongzishu">-</span> 字</li>
+              <li >退　格：<span class="tuige">-</span> 次</li>
+            </ul>
+          </div>
+          <div class="typing_info_link">
+            <div class="column">
+              <a href="javascript:;" onclick="dazi_pause(this)" id="pause_a" class="pause">暂停</a>
+              <a href="javascript:;" onclick="close_light(this)" class="light">关灯</a>
+            </div>
+            <div class="column">
+              <a href="javascript:;" 
+              onclick="G('pause_a').className='pause'; dazi_pause(G('pause_a')); alert('已暂停打字，请在新打开的页面点【改错字】按钮，就可以更改文章的错字啦！');window.open('art_show_21.html');"
+                class="gaicuo">错字</a>
+              <a href="./" class="home">刷新</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="content" class="typing_content">
+        <div id="i_0" class="typing">
+          <div class="text">
+            <span>Once upon a time a little girl tried to make a living by selling matches in the </span>
+          </div>
+          <input type="hidden" value="Once upon a time a little girl tried to make a living by selling matches in the " />
+          <input autocomplete="off"  type="text" class="typing" value="" />
+        </div>
+        <div id="i_1" class="typing">
+          <div class="text">
+            <span>street. It was New Year&#039;s Eve and the snowed streets were deserted. From brightly </span>
+          </div>
+          <input type="hidden" value="street. It was New Year&#039;s Eve and the snowed streets were deserted. From brightly " />
+          <input autocomplete="off"  type="text" class="typing" value="" />
+        </div>
+        <div id="i_2" class="typing">
+          <div class="text">
+            <span>lit windows came the tinkle of laughter and the sound of singing. People were </span>
+          </div>
+          <input type="hidden" value="lit windows came the tinkle of laughter and the sound of singing. People were " />
+          <input autocomplete="off" type="text" class="typing" value="" />
+        </div>
+      </div>
+    </form>
+    <script type="text/javascript" src="index.js"></script>
+
+
+  </div>
+</body>
+
+</html>
