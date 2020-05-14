@@ -12,15 +12,15 @@
 
       <div id="info">
         <input type="hidden" name="n8cead3da827842f0" id="type" value="en" />
-        <input type="hidden" name="necd1c9194c45edc9" id="time" value="5" />
+        <input type="hidden" name="necd1c9194c45edc9" id="time" value="1" />
         <input type="hidden" id="word_num" value="200" />
 
         <div id="typing_info">
           <div id="typing_info_li">
             <ul>
               <li class="daojishi">倒计时</li>
-              <li ><span class="daojishi_time">05:00</span></li>
-              <li >设定时间：<span class="sheding">5</span>分钟</li>
+              <li ><span class="daojishi_time">01:00</span></li>
+              <li >设定时间：<span class="sheding">-</span>分钟</li>
               <li >速　度：<span class="sudu">-</span> WPM</li>
               <li >正确率：<span class="zhengquelv">-</span> %</li>
               <li >错　误：<span class="cuowu">-</span> 字</li>
@@ -30,14 +30,12 @@
           </div>
           <div class="typing_info_link">
             <div class="column">
-              <a href="javascript:;" onclick="dazi_pause(this)" id="pause_a" class="pause">暂停</a>
-              <a href="javascript:;" onclick="close_light(this)" class="light">关灯</a>
+              <a href="javascript:;" id="pause_a" class="pause">暂停</a>
+              <a href="javascript:;" id="light_a" class="light">关灯</a>
             </div>
             <div class="column">
-              <a href="javascript:;" 
-              onclick="G('pause_a').className='pause'; dazi_pause(G('pause_a')); alert('已暂停打字，请在新打开的页面点【改错字】按钮，就可以更改文章的错字啦！');window.open('art_show_21.html');"
-                class="gaicuo">错字</a>
-              <a href="./" class="home">刷新</a>
+              <a href="javascript:;" class="gaicuo">错字</a>
+              <a href="javascript:;" class="home">刷新</a>
             </div>
 
           </div>
@@ -69,8 +67,6 @@
       </div>
     </form>
     <script type="text/javascript" src="index.js"></script>
-
-
   </div>
 </body>
 
