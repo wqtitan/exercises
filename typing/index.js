@@ -54,11 +54,10 @@ function typing(startRow, stop) {
         var inputElement = contentDivs.item(i).getElementsByTagName("input").item(1);
 
         if (startRow == i && "stop" != isStop) {
-            console.log(111);
-            
             inputElement.readOnly = !1;  // 输入框可输入
-            inputElement.onfocus = "";    // 输入框获得焦点
+            inputElement.onfocus = "";    // 取消焦点事件
             da(inputElement);            // 输入框获得焦点后,光标移动到文字末尾
+            
             inputElement.onkeydown = function (a) {
                 V(this, a, 1);
             };
@@ -68,20 +67,18 @@ function typing(startRow, stop) {
             };
             inputElement.onclick = "";
             inputElement.parentNode.className = "typing typing_on";  // 修改class <div id="i_0" class="typing">
-        } else if("stop" != isStop) { 
+        } else if("stop" != isStop) {
+            // 注册焦点事件：获得焦点时把焦点给当前输入框，所以焦点总在当前输入框上，其他输入框无法获取焦点
             inputElement.onfocus = function () {
                 var currentInputElement = contentDivs.item(startRow).getElementsByTagName("input").item(1);
-                da(currentInputElement);
+                da(currentInputElement); 
             };
             inputElement.parentNode.className = "typing";
         } else {
-            console.log(444);
             // 点击暂停按钮，进入此处
             inputElement.readOnly = !0;  // 输入框不可输入
             inputElement.parentNode.className = "typing";  // 间接修改样式
-            console.log(555);
             if (startRow == i) {
-                console.log("绑定事件");
                 inputElement.onclick = function () {
                     confirm(
                         // 正处于暂停状态，恢复打字？
@@ -94,31 +91,46 @@ function typing(startRow, stop) {
     r = 0;
 }
 
+function da(inputElement) {
+    var i=inputElement.value.length;
+    if ("undefined" != typeof inputElement.createTextRange) {
+        var b = inputElement.createTextRange();
+        b.moveStart("character", i);
+        b.collapse(!0);
+        b.select();
+    } else { 
+        inputElement.setSelectionRange(i, i);
+        inputElement.focus();
+    }
+}
 
 
-function V(a, b, c) {
-    // b = b || window.event;
-    // console.log(b);
+function V(inputElementOjb, event, c) {
+    event = event || window.event;
+    // console.log((event || window.event));
     
-    // b = b.which ? b.which : b.keyCode;
-    if (0 < timeOfStartPausing) return !1;
-    var d = a.parentNode.getElementsByTagName("div").item(0).getElementsByTagName("span").item(0),
-        e = a.parentNode.getElementsByTagName("input").item(0),
-        f = a.value.length,
+    event = event.which ? event.which : event.keyCode;
+    // if (0 < timeOfStartPausing) return !1;
+    debugger
+    var d = inputElementOjb.parentNode.getElementsByTagName("div").item(0).getElementsByTagName("span").item(0),
+        e = inputElementOjb.parentNode.getElementsByTagName("input").item(0),
+        f = inputElementOjb.value.length,
         g = e.value.length,
         l = O[starRow],
-        m = qa(e.value, a.value);
+        
+        m = qa(e.value, inputElementOjb.value);
+        
     d.innerHTML = m;
-    65 <= b && 90 >= b && 0 == typingTime && refresh();
+    65 <= event && 90 >= event && 0 == typingTime && refresh();
     if (0 == ea)
-        8 == b &&
+        8 == event &&
             2 <= starRow &&
             1 != r &&
             0 == f &&
             1 == c &&
-            ((r = 1), (starRow -= 2), typing(starRow), (a.onkeydown = ""), (a.onkeyup = ""), (a.oninput = "")),
+            ((r = 1), (starRow -= 2), typing(starRow), (inputElementOjb.onkeydown = ""), (inputElementOjb.onkeyup = ""), (inputElementOjb.oninput = "")),
             
-            P(b, c);
+            P(event, c);
     else {
         0 < f && 0 == typingTime && refresh();
         if (1 != r && starRow < contentDivs.length) {
@@ -128,39 +140,39 @@ function V(a, b, c) {
             d - theNumberOfLetters > Z && (Z = d - theNumberOfLetters);
             theNumberOfLetters = d;
             theNumberOfWrongLetters = Y(fa);
-            P(b, c);
+            P(event, c);
         }
-        g == f && e.value.substring(g - 1, g) == a.value.substring(f - 1, f) && E.length != starRow / 2 && 1 != r
+        g == f && e.value.substring(g - 1, g) == inputElementOjb.value.substring(f - 1, f) && E.length != starRow / 2 && 1 != r
             ? ((r = 1),
               (starRow += 2),
               setTimeout(function () {
                   starRow < contentDivs.length && (contentDivs.item(starRow).getElementsByTagName("input").item(1).value = "");
                   typing(starRow);
               }, 10),
-              (a.onkeydown = ""),
-              (a.onkeyup = ""),
-              (a.oninput = ""),
+              (inputElementOjb.onkeydown = ""),
+              (inputElementOjb.onkeyup = ""),
+              (inputElementOjb.oninput = ""),
               
-              P(b, c))
-            : g < f && e.value.substring(g - 1, g) == a.value.substring(g - 1, g) && E.length != starRow / 2 && 1 != r
+              P(event, c))
+            : g < f && e.value.substring(g - 1, g) == inputElementOjb.value.substring(g - 1, g) && E.length != starRow / 2 && 1 != r
             ? ((r = 1),
-              (e = a.value),
+              (e = inputElementOjb.value),
               (contentDivs.item(starRow).getElementsByTagName("input").item(1).value = e.substr(0, g)),
               (starRow += 2),
               starRow >= contentDivs.length
                   ? U(2)
                   : ((contentDivs.item(starRow).getElementsByTagName("input").item(1).value = e.substr(g, f - g)),
                     typing(starRow),
-                    (a.onkeydown = ""),
-                    (a.onkeyup = ""),
-                    (a.oninput = ""),
+                    (inputElementOjb.onkeydown = ""),
+                    (inputElementOjb.onkeyup = ""),
+                    (inputElementOjb.oninput = ""),
                     
-                    P(b, c)))
+                    P(event, c)))
             : g <= f &&
-              13 == b &&
+              13 == event &&
               1 != r &&
               1 == c &&
-              ((r = 1), (starRow += 2), typing(starRow), (a.onkeydown = ""), (a.onkeyup = ""), (a.oninput = ""));
+              ((r = 1), (starRow += 2), typing(starRow), (inputElementOjb.onkeydown = ""), (inputElementOjb.onkeyup = ""), (inputElementOjb.oninput = ""));
               
     }
     ea = f;
@@ -253,14 +265,7 @@ function refresh() {
 }
 
 //  
-function da(inputElement) {
-    if ("undefined" != typeof inputElement.createTextRange) {
-        var b = inputElement.createTextRange();
-        b.moveStart("character", inputElement.value.length);
-        b.collapse(!0);
-        b.select();
-    } else inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length), inputElement.focus();
-}
+
 
 function qa(a, b) {
     str1 = la(a);
@@ -315,8 +320,8 @@ function Y(a) {
 }
 
 function la(a) {
-    for (var b = [], c = 0; c < a.length; c++)
-        (b[c] = a.substr(c, 1)), "\x3c" == b[c] && (b[c] = "\x26lt;"), "\x3e" == b[c] && (b[c] = "\x26gt;");
+    for (var b = [], i = 0; i < a.length; i++)
+        (b[i] = a.substring(i, i+1)), "\x3c" == b[i] && (b[i] = "\x26lt;"), "\x3e" == b[i] && (b[i] = "\x26gt;");
     return b;
 }
 
