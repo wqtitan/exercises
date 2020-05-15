@@ -16,17 +16,16 @@ var contentDivs = document.getElementById("content").getElementsByTagName("div")
     v = 0,
     r = 0,
     ha = 0,
-    S = "",
-    L = "",
-    K = "",
-    C = "",
-    J = "",
-    B = "",
+    // S = "",
+    // L = "",
+    // K = "",
+    // C = "",
+    // J = "",
+    // B = "",
     I = 0,
     ea = 0,
     Z = 0,
     ca = 0,
-    // ia = 0,
     w = [[], [], []],
     aa = 0;
 
@@ -111,16 +110,16 @@ function V(inputElementOjb, event, c) {
     
     event = event.which ? event.which : event.keyCode;
     // if (0 < timeOfStartPausing) return !1;
-    debugger
-    var d = inputElementOjb.parentNode.getElementsByTagName("div").item(0).getElementsByTagName("span").item(0),
-        e = inputElementOjb.parentNode.getElementsByTagName("input").item(0),
-        f = inputElementOjb.value.length,
-        g = e.value.length,
-        l = O[starRow],
+
+    var spanElement = inputElementOjb.parentNode.getElementsByTagName("div").item(0).getElementsByTagName("span").item(0),
+        firstInputElement = inputElementOjb.parentNode.getElementsByTagName("input").item(0),
+        f = inputElementOjb.value.length,    // 输入框内文字长度
+        g = firstInputElement.value.length,  
+        l = O[starRow],    // 数组
         
-        m = qa(e.value, inputElementOjb.value);
+        m = qa(firstInputElement.value, inputElementOjb.value);
         
-    d.innerHTML = m;
+    spanElement.innerHTML = m;
     65 <= event && 90 >= event && 0 == typingTime && refresh();
     if (0 == ea)
         8 == event &&
@@ -135,14 +134,20 @@ function V(inputElementOjb, event, c) {
         0 < f && 0 == typingTime && refresh();
         if (1 != r && starRow < contentDivs.length) {
             1 == E[starRow] - f && 0 == O[starRow] && 0 == l && theNumberOfBS++;
-            if (f < g || " " != e.value.substring(g - 1, g)) E[starRow] = 0 < f ? (f > g ? g : f) : 0;
-            d = Y(E) - Y(O);
-            d - theNumberOfLetters > Z && (Z = d - theNumberOfLetters);
-            theNumberOfLetters = d;
+            if (f < g || " " != firstInputElement.value.substring(g - 1, g)) E[starRow] = 0 < f ? (f > g ? g : f) : 0;
+            let spanElement = Y(E) - Y(O);
+            console.log(spanElement);
+            
+            // spanElement - theNumberOfLetters > Z && (Z = spanElement - theNumberOfLetters);
+
+            if (spanElement - theNumberOfLetters > Z) {
+                Z = spanElement - theNumberOfLetters;
+            }
+            theNumberOfLetters = spanElement;
             theNumberOfWrongLetters = Y(fa);
             P(event, c);
         }
-        g == f && e.value.substring(g - 1, g) == inputElementOjb.value.substring(f - 1, f) && E.length != starRow / 2 && 1 != r
+        g == f && firstInputElement.value.substring(g - 1, g) == inputElementOjb.value.substring(f - 1, f) && E.length != starRow / 2 && 1 != r
             ? ((r = 1),
               (starRow += 2),
               setTimeout(function () {
@@ -154,14 +159,14 @@ function V(inputElementOjb, event, c) {
               (inputElementOjb.oninput = ""),
               
               P(event, c))
-            : g < f && e.value.substring(g - 1, g) == inputElementOjb.value.substring(g - 1, g) && E.length != starRow / 2 && 1 != r
+            : g < f && firstInputElement.value.substring(g - 1, g) == inputElementOjb.value.substring(g - 1, g) && E.length != starRow / 2 && 1 != r
             ? ((r = 1),
-              (e = inputElementOjb.value),
-              (contentDivs.item(starRow).getElementsByTagName("input").item(1).value = e.substr(0, g)),
+              (firstInputElement = inputElementOjb.value),
+              (contentDivs.item(starRow).getElementsByTagName("input").item(1).value = firstInputElement.substr(0, g)),
               (starRow += 2),
               starRow >= contentDivs.length
                   ? U(2)
-                  : ((contentDivs.item(starRow).getElementsByTagName("input").item(1).value = e.substr(g, f - g)),
+                  : ((contentDivs.item(starRow).getElementsByTagName("input").item(1).value = firstInputElement.substr(g, f - g)),
                     typing(starRow),
                     (inputElementOjb.onkeydown = ""),
                     (inputElementOjb.onkeyup = ""),
@@ -178,7 +183,64 @@ function V(inputElementOjb, event, c) {
     ea = f;
 }
 
-//  速度
+
+
+
+//  firstInputElement.value, inputElementOjb.value
+
+
+function qa(a, b) {
+    var strArr1 = stringToArr(a);
+    var strArr2 = stringToArr(b);
+    var theNumberOfTimesOfWrongTyping = 0; //  输入错误的次数
+    var c = "",
+        
+        e = null,
+        f = 0,
+        language = document.getElementById("type").value,
+        arr1Length = strArr1.length,
+        arr2Length = strArr2.length;
+        
+        // 处理字符串
+    for (i = 0; i < (arr1Length > arr2Length ? arr1Length : arr2Length); i++) {
+        if (i < arr1Length) {
+                if (strArr1[i] == strArr2[i]) {
+                    c += '\x3cspan class\x3d"green"\x3e' + strArr1[i] + "\x3c/span\x3e";
+                } else if(null == strArr2[i]) {
+                    (c += strArr1[i]), 0 == f && 0 < arr2Length && (f = i);
+                } else {
+                    theNumberOfTimesOfWrongTyping++;
+                    c += '\x3cspan class\x3d"red"\x3e' + strArr1[i] + "\x3c/span\x3e";
+                }
+        }
+    }
+
+    // if (0 == m || 0 != f) {
+    //     language = contentDivs.item(starRow).id;
+    //     language = language.substr(2);
+    //     if ("array" == typeof wubi86[language] || "object" == typeof wubi86[language]) {
+    //         if (((m = wubi86[language]), "array" == typeof m[f] || "object" == typeof m[f])) {
+    //             p = "";
+    //             for (q = f; q < f + m[f][0] && q < k; q++) p += strArr1[q];
+    //             L = p;
+    //             S = m[f][1];
+    //         }
+    //     } else (L = ""), (S = "-");
+    //     "array" == typeof wubi861[language] || "object" == typeof wubi861[language]
+    //         ? ((m = wubi861[language]), "undefined" != typeof m[f] ? ((C = strArr1[f]), (K = m[f])) : ((C = ""), (K = "-")))
+    //         : ((C = ""), (K = "-"));
+    //     "array" == typeof pinyin[language] || "object" == typeof pinyin[language]
+    //         ? ((m = pinyin[language]), "undefined" != typeof m[f] ? ((B = strArr1[f]), (J = m[f])) : ((B = ""), (J = "-")))
+    //         : ((B = ""), (J = "-"));
+    // } else (L = ""), (S = "-"), (B = ""), (J = "-"), (C = ""), (K = "-");
+
+
+    fa[starRow] = theNumberOfTimesOfWrongTyping;
+    O[starRow] = null == e ? 0 : e;
+    return c;
+}
+
+//  
 function P(a, b) {
     var c = "cn" == document.getElementById("type").value ? 2 : 1;
     if (
@@ -199,6 +261,49 @@ function P(a, b) {
         
     }
 }
+
+//  参数a  数组  
+function Y(a) {   
+    for (var b = 0, c = 0; c < 2 * a.length && c <= starRow; c += 2) {
+        if (0 < a[c]) {
+            b += a[c];
+        }
+    }
+    return b;
+}
+
+// 将字符串转为数组  并将 <> 转码
+function stringToArr(a) {
+    for(var b = [], i = 0; i < a.length; i++) {
+        b[i] = a.substring(i, i+1);
+        if ("\x3c" == b[i]) {
+            b[i] = "\x26lt;";
+        }
+        if ("\x3e" == b[i]) {
+            b[i] = "\x26gt;";
+        }
+    }
+    return b;
+}
+
+
+function sa() {
+    for (var a = 0, b = 0, theNumberOfLetters = 0, i = 1; i < contentDivs.length; i += 2) {
+        var spanHC = contentDivs.item(i).getElementsByTagName("span");
+        // console.log(contentDivs);
+
+        if (1 == spanHC.length) {
+            // console.log(spanHC);
+            var spanoffsetWidth = spanHC.item(0).offsetWidth,
+                spanHC = spanHC.item(0).innerHTML.replace(/(\s{1})$/g, ""); //去掉末尾空格 \s 空格   {1}重复1次   $末尾  g修饰符表示全局匹配（global）
+
+            0 < spanHC.length && (theNumberOfLetters += spanHC.length);
+            spanoffsetWidth > a && ((a = spanoffsetWidth), (b = i));
+        }
+    }
+    return [b, a];
+}
+
 
 //  倒计时
 function refresh() {
@@ -264,85 +369,9 @@ function refresh() {
     typingTime >= 6e4 * totalTime.value && clearTimeout(timer);
 }
 
-//  
 
 
-function qa(a, b) {
-    str1 = la(a);
-    str2 = la(b);
-    var c = "",
-        d = 0,
-        e = null,
-        f = 0,
-        g = document.getElementById("type").value,
-        k = str1.length,
-        m = str2.length;
-    for (l = 0; l < (k > m ? k : m); l++)
-        if (l < k) {
-            var p = l < m ? b.substr(l) : null,
-                q = /^[a-z\' ]{1,20}$/;
-            str1[l] == str2[l]
-                ? (c += '\x3cspan class\x3d"green"\x3e' + str1[l] + "\x3c/span\x3e")
-                : null == str2[l]
-                ? ((c += str1[l]), 0 == f && 0 < m && (f = l))
-                : "cn" == g && q.test(p)
-                ? ((c += '\x3cspan class\x3d"yellow"\x3e' + str1[l] + "\x3c/span\x3e"),
-                  0 == f && 0 < m && (f = l),
-                  null == e && (e = m < k ? m - l : k - l))
-                : (d++, (c += '\x3cspan class\x3d"red"\x3e' + str1[l] + "\x3c/span\x3e"));
-        }
-    if (0 == m || 0 != f) {
-        g = contentDivs.item(starRow).id;
-        g = g.substr(2);
-        if ("array" == typeof wubi86[g] || "object" == typeof wubi86[g]) {
-            if (((m = wubi86[g]), "array" == typeof m[f] || "object" == typeof m[f])) {
-                p = "";
-                for (q = f; q < f + m[f][0] && q < k; q++) p += str1[q];
-                L = p;
-                S = m[f][1];
-            }
-        } else (L = ""), (S = "-");
-        "array" == typeof wubi861[g] || "object" == typeof wubi861[g]
-            ? ((m = wubi861[g]), "undefined" != typeof m[f] ? ((C = str1[f]), (K = m[f])) : ((C = ""), (K = "-")))
-            : ((C = ""), (K = "-"));
-        "array" == typeof pinyin[g] || "object" == typeof pinyin[g]
-            ? ((m = pinyin[g]), "undefined" != typeof m[f] ? ((B = str1[f]), (J = m[f])) : ((B = ""), (J = "-")))
-            : ((B = ""), (J = "-"));
-    } else (L = ""), (S = "-"), (B = ""), (J = "-"), (C = ""), (K = "-");
-    fa[starRow] = d;
-    O[starRow] = null == e ? 0 : e;
-    return c;
-}
 
-function Y(a) {
-    for (var b = 0, c = 0; c < 2 * a.length && c <= starRow; c += 2) 0 < a[c] && (b += a[c]);
-    return b;
-}
-
-function la(a) {
-    for (var b = [], i = 0; i < a.length; i++)
-        (b[i] = a.substring(i, i+1)), "\x3c" == b[i] && (b[i] = "\x26lt;"), "\x3e" == b[i] && (b[i] = "\x26gt;");
-    return b;
-}
-
-
-function sa() {
-    for (var a = 0, b = 0, theNumberOfLetters = 0, i = 1; i < contentDivs.length; i += 2) {
-        var spanHC = contentDivs.item(i).getElementsByTagName("span");
-        // console.log(contentDivs);
-
-        if (1 == spanHC.length) {
-            // console.log(spanHC);
-            var spanoffsetWidth = spanHC.item(0).offsetWidth,
-                spanHC = spanHC.item(0).innerHTML.replace(/(\s{1})$/g, ""); //去掉末尾空格 \s 空格   {1}重复1次   $末尾  g修饰符表示全局匹配（global）
-
-            0 < spanHC.length && (theNumberOfLetters += spanHC.length);
-            spanoffsetWidth > a && ((a = spanoffsetWidth), (b = i));
-        }
-    }
-    // ia = theNumberOfLetters;
-    return [b, a];
-}
 
 
 // 暂停 继续
@@ -417,11 +446,11 @@ if (1 < contentDivs.length) {
     //     console.log(bodyWidth);
     // }
 
-    for (var N = sa(), l = 1; 10 >= l; l++) {
+    for (var N = sa(), i = 1; 10 >= i; i++) {
         var ta = contentDivs.item(N[0]).getElementsByTagName("span").item(0);
         N[1] = ta.offsetWidth;
         if (0 < contentWidth && 0 < N[1] && (N[1] > contentWidth - 60 || N[1] > bodyWidth - 240))
-            document.getElementById("content").className = "typing_content font" + l;
+            document.getElementById("content").className = "typing_content font" + i;
         else break;
     }
 }
